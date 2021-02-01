@@ -3,20 +3,25 @@ package cinema;
 import java.util.Scanner;
 
 public class Cinema {
+    //инициализация поля текущего дохода
     int income = 0;
 
     public static void main(String[] args) {
+        //создание необходимых объектов
         final Cinema cinema = new Cinema();
         final Scanner scanner = new Scanner(System.in);
-
+        
+        //ввод размерности зала
         System.out.println("Enter the number of rows:");
         int a = scanner.nextInt();
         System.out.println("Enter the number of seats in each row:");
         int b = scanner.nextInt();
-
+        
+        //создание комнаты
         String[][] array = cinema.createCinemaRoom(a, b);
         String input;
-
+        
+        //меню
         do {
             System.out.println("\n\n1. Show the seats\n" +
                     "2. Buy a ticket\n" +
@@ -37,8 +42,9 @@ public class Cinema {
                 case "0":
                     break;
             }
-        } while (!input.equals("0"));
+        } while (!input.equals("0")); //если выбран ноль, то цикл завершается
 
+        //код, который не пригодился в конечной стадии
 //        System.out.println("Total income:");
 //        int d;
 //        if (a*b > 60) {
@@ -49,8 +55,10 @@ public class Cinema {
 //
 //        System.out.printf("$%d", d);
     }
-
+    
+    //метод вывода статистики кинотетра с помощью форматирования строки
     public void showStats(String[][] array) {
+        //необходимые высления проданых билетов, процентного соотношения и полного теоретического дохода
         int purchased = 0;
         for (String[] strings : array) {
             for (int j = 0; j < array[0].length; j++) {
@@ -59,7 +67,7 @@ public class Cinema {
                 }
             }
         }
-
+        
         double percentage = 100 * (double) purchased / (array.length * array[0].length);
         int totalIncome;
         if (array.length * array[0].length > 60) {
@@ -69,13 +77,15 @@ public class Cinema {
             totalIncome = array[0].length * array.length * 10;
         }
 
-
+        
+        //сам непостредственно вывод
         System.out.printf("Number of purchased tickets: %d\n", purchased);
         System.out.println(String.format("Percentage: %.2f", percentage) + "%");
         System.out.printf("Current income: $%d\n", income);
         System.out.printf("Total income: $%d\n", totalIncome);
     }
-
+    
+    //методы покупки билета, значение текущего дохода (поле класса) увеличиваем на цену билета
     public void buyTicket(String[][] array, Scanner scanner) {
         System.out.println("\n\nEnter a row number:");
         int rowNumber = scanner.nextInt();
@@ -110,7 +120,8 @@ public class Cinema {
 
         }
     }
-
+    
+    //вывод визуализации мест, свободные -- S, забронированные -- B
     public void showPlaces(String[][] array) {
         System.out.println("\nCinema:");
         System.out.print("  ");
